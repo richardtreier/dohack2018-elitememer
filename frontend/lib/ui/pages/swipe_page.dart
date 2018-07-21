@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'dart:ui' as ui;
 
 import 'package:elitememer/ui/widgets/nav_scaffold.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,7 @@ class SwipePageState extends State<SwipePage>
   double movedPercentage = 0.0;
   AnimationController controller;
 
-  List<String> memes = [
+  List<String> memes = <String>[
     'https://i.imgur.com/UE5Meld.jpg',
     'https://i.imgur.com/5LZroHc.jpg',
     'https://i.imgur.com/277C2AY.jpeg',
@@ -23,6 +23,8 @@ class SwipePageState extends State<SwipePage>
 
   @override
   void initState() {
+    super.initState();
+
     controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 350));
   }
@@ -35,17 +37,17 @@ class SwipePageState extends State<SwipePage>
         children: <Widget>[
           memes.length > 1
               ? Container(
-                  decoration: new BoxDecoration(
-                    image: new DecorationImage(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
                       image: NetworkImage(memes[1]),
                       fit: BoxFit.cover,
                     ),
                   ),
-                  child: new BackdropFilter(
-                    filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                    child: new Container(
-                      decoration: new BoxDecoration(
-                          color: Colors.black.withOpacity(0.5)),
+                  child: BackdropFilter(
+                    filter: ui.ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                    child: Container(
+                      decoration:
+                          BoxDecoration(color: Colors.black.withOpacity(0.5)),
                     ),
                   ),
                 )
@@ -53,17 +55,17 @@ class SwipePageState extends State<SwipePage>
           Opacity(
             opacity: movedPercentage.abs(),
             child: Container(
-              decoration: new BoxDecoration(
-                image: new DecorationImage(
+              decoration: BoxDecoration(
+                image: DecorationImage(
                   image: NetworkImage(memes[0]),
                   fit: BoxFit.cover,
                 ),
               ),
-              child: new BackdropFilter(
-                filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                child: new Container(
+              child: BackdropFilter(
+                filter: ui.ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                child: Container(
                   decoration:
-                      new BoxDecoration(color: Colors.black.withOpacity(0.5)),
+                      BoxDecoration(color: Colors.black.withOpacity(0.5)),
                 ),
               ),
             ),
@@ -85,7 +87,7 @@ class SwipePageState extends State<SwipePage>
                       movedPercentage =
                           moved / MediaQuery.of(context).size.width * 1.5;
 
-                      double discardPercentage = 0.6;
+                      final double discardPercentage = 0.6;
 
                       if (movedPercentage > discardPercentage ||
                           movedPercentage < -discardPercentage) {
@@ -142,7 +144,7 @@ class SwipePageState extends State<SwipePage>
   void animateSlide(bool forward) {
     controller.reset();
 
-    Animation animation = Tween<double>(begin: 0.0, end: 1.3)
+    final Animation<double> animation = Tween<double>(begin: 0.0, end: 1.3)
         .animate(CurvedAnimation(parent: controller, curve: Curves.easeInOut));
 
     animation.addListener(() {
@@ -169,9 +171,9 @@ class SwipePageState extends State<SwipePage>
 }
 
 class SwipeCard extends StatelessWidget {
-  String url;
-  double swipePercentage;
-  int order;
+  final String url;
+  final double swipePercentage;
+  final int order;
 
   SwipeCard({this.url, this.swipePercentage = 0.0, @required this.order});
 
