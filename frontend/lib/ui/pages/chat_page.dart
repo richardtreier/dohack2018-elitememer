@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return buildNavScaffold(
-      context,
-      Container()
-    );
+    return buildNavScaffold(context, Container());
   }
 }

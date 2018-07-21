@@ -1,5 +1,4 @@
 import 'dart:ui' as ui;
-
 import 'package:elitememer/ui/widgets/nav_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -226,8 +225,8 @@ class SwipeCard extends StatelessWidget {
               angle:
                   swipePercentage == 0.0 ? order / 30.0 : swipePercentage * 0.7,
               child: Card(
-                child: Image.network(
-                  url,
+                child: CachedNetworkImage(
+                  imageUrl: url,
                   height: 300.0,
                   width: 300.0,
                 ),

@@ -1,4 +1,3 @@
-import 'package:elitememer/ui/widgets/nav_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:intro_views_flutter/Models/page_view_model.dart';
 import 'package:intro_views_flutter/intro_views_flutter.dart';
@@ -58,25 +57,24 @@ class IntroPage extends StatelessWidget {
       ),
       textStyle: TextStyle(fontFamily: 'MyFont', color: Colors.white),
     ),
-];
+  ];
 
   @override
   Widget build(BuildContext context) {
     return new IntroViewsFlutter(
-              pages,
-              onTapDoneButton: () {
-                Navigator.push<dynamic>(
-                  context,
-                  new MaterialPageRoute<dynamic>(
-                      builder: (context) => new SwipePage()), //MaterialPageRoute
-                );
-              },
-              showSkipButton:
-                  true, //Whether you want to show the skip button or not.
-              pageButtonTextStyles: TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
-              ),
+      pages,
+      onTapDoneButton: () {
+        Navigator.push<dynamic>(
+          context,
+          new MaterialPageRoute<dynamic>(
+              builder: (context) => new SwipePage()), //MaterialPageRoute
+        );
+      },
+      showSkipButton: true, //Whether you want to show the skip button or not.
+      pageButtonTextStyles: TextStyle(
+        color: Colors.white,
+        fontSize: 18.0,
+      ),
     ); //Material App
   }
 }
