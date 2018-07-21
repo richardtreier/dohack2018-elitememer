@@ -131,6 +131,13 @@ class SwipePageState extends State<SwipePage>
                     ),
                     FloatingActionButton(
                       heroTag: null,
+                      backgroundColor: Colors.orangeAccent,
+                      foregroundColor: Colors.white,
+                      child: Icon(Icons.star),
+                      onPressed: () => animateSlide(true, true, 0.0),
+                    ),
+                    FloatingActionButton(
+                      heroTag: null,
                       backgroundColor: Colors.greenAccent,
                       foregroundColor: Colors.white,
                       child: Icon(Icons.favorite_border),
