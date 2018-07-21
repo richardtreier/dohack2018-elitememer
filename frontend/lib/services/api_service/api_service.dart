@@ -47,7 +47,7 @@ class ApiService {
   }
 
   Future<List<User>> fetchUserMatches(
-      User user, User viewingUser, int numMemes) async {
+      User user, int numMemes) async {
     return _fetchGraphQL(
         """
         query user(\$userUuid: ID!, \$viewingUserUuid: ID!) {
@@ -58,17 +58,16 @@ class ApiService {
               avatar {
                 imgurURL
               }
-              snobOrBobPercentage(viewerUserUuid: \$viewingUserUuid)
-              matchPercentage(viewerUserUuid: \$viewingUserUuid)
-              enemyPercentage(viewerUserUuid: \$viewingUserUuid)
+              snobOrBobPercentage(viewerUserUuid: \$userUuid)
+              matchPercentage(viewerUserUuid: \$userUuid)
+              enemyPercentage(viewerUserUuid: \$userUuid)
             }
           }
         }
       """,
         false,
         <String, dynamic>{
-          "userUuid": user.uuid,
-          "viewingUserUuid": viewingUser.uuid
+          "userUuid": user.uuid
         },
         (Map<String, dynamic> json) => User.fromJson(json["user"]).matches);
   }
