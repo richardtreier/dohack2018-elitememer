@@ -18,6 +18,6 @@ public class Meme extends AbstractBaseEntity {
     @OneToOne
     private Image image;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "meme")
     private Set<Swipe> swipes = new HashSet<>();
 }

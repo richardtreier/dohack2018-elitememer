@@ -1,7 +1,7 @@
 package de.dohack2018.elitememer.elitememerbackend.web;
 
 import com.coxautodev.graphql.tools.GraphQLResolver;
-import com.google.common.collect.Lists;
+import de.dohack2018.elitememer.elitememerbackend.core.MatchingService;
 import de.dohack2018.elitememer.elitememerbackend.core.UserService;
 import de.dohack2018.elitememer.elitememerbackend.dao.entities.Meme;
 import de.dohack2018.elitememer.elitememerbackend.dao.entities.User;
@@ -18,33 +18,43 @@ public class UserFieldResolver implements GraphQLResolver<User> {
     @Autowired
     private transient UserService userService;
 
+    @Autowired
+    private transient MatchingService matchingService;
+
     @Transactional(readOnly = true)
-    public Double getSnobOrBobPercentage(User user, UUID viewerUserUuid) {
-        return 0.2;
+    public Double getSnobOrBobPercentage(User user, UUID viewerUserUuid) throws PrimaryResourceNotFoundException {
+        User viewer = userService.findOne(viewerUserUuid).orElseThrow(() -> new PrimaryResourceNotFoundException
+                ("Could not find Viewer with uuid '" + viewerUserUuid + "'."));
+        return matchingService.getSnobOrBobPercentage(user, viewer);
     }
 
     @Transactional(readOnly = true)
-    public Double getMatchPercentage(User user, UUID viewerUserUuid) {
-        return 0.92;
+    public Double getMatchPercentage(User user, UUID viewerUserUuid) throws PrimaryResourceNotFoundException {
+        User viewer = userService.findOne(viewerUserUuid).orElseThrow(() -> new PrimaryResourceNotFoundException
+                ("Could not find Viewer with uuid '" + viewerUserUuid + "'."));
+        return matchingService.getSnobOrBobPercentage(user, viewer);
     }
 
     @Transactional(readOnly = true)
-    public Double getEnemyPercentage(User user, UUID viewerUserUuid) {
-        return 0.3;
+    public Double getEnemyPercentage(User user, UUID viewerUserUuid) throws PrimaryResourceNotFoundException {
+        User viewer = userService.findOne(viewerUserUuid).orElseThrow(() -> new PrimaryResourceNotFoundException
+                ("Could not find Viewer with uuid '" + viewerUserUuid + "'."));
+        return matchingService.getEnemyPercentage(user, viewer);
     }
 
     @Transactional(readOnly = true)
-    public List<Meme> getTopMemes(User user, UUID viewerUserUuid) {
-        return Collections.emptyList();
+    public List<Meme> getTopMemes(User user, UUID viewerUserUuid) throws PrimaryResourceNotFoundException {
+        User viewer = userService.findOne(viewerUserUuid).orElseThrow(() -> new PrimaryResourceNotFoundException("Could not find Viewer with uuid '"+viewerUserUuid+"'."));
+        return matchingService.getTopMemes(user, viewer);
     }
 
     @Transactional(readOnly = true)
     public List<Meme> getNextMemes(User user, int num) {
-        return Collections.emptyList();
+        return matchingService.getNextMemes(user, num);
     }
 
     @Transactional(readOnly = true)
     public List<User> getMatches(User user) {
-        return Collections.emptyList();
+        return matchingService.getMatches(user);
     }
 }

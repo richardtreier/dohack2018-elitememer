@@ -2,3 +2,7 @@ type Query {
     userList: [User!]!
     user(uuid: ID!): User!
 }
+
+type Mutation {
+    likeOrDislikeMeme(like: Boolean!, memeUuid: ID!, userUuid: ID!): Boolean!
+}
