@@ -1,18 +1,34 @@
+import 'dart:ui';
 import 'package:elitememer/ui/widgets/nav_scaffold.dart';
 import 'package:flutter/material.dart';
-import 'dart:ui';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ProfilePage extends StatelessWidget {
   int _matchValue = 10;
   int _enemyValue = 40;
+
+  List<String> _memes = [
+    'https://i.imgur.com/UE5Meld.jpg',
+    'https://i.imgur.com/5LZroHc.jpg',
+    'https://i.imgur.com/277C2AY.jpeg',
+  ];
+
+  List<T> map<T>(List list, Function handler) {
+    List<T> result = [];
+    for (var i = 0; i < list.length; i++) {
+      result.add(handler(i, list[i]));
+    }
+
+    return result;
+  }
 
   Widget _buildProfileHeaderImage(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
 
     return Container(
       width: screenWidth,
-      height: 280.0,
+      height: 260.0,
       decoration: new BoxDecoration(
         image: new DecorationImage(
           image: NetworkImage(
@@ -66,23 +82,28 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildChat() {}
+  void _select() {}
+
+  Widget _buildChat() {
+    return FloatingActionButton(
+      elevation: 0.0,
+      child: new Icon(Icons.message),
+      backgroundColor: new Color(0xFFE57373),
+      onPressed: (){}
+    );
+  }
 
   Widget _buildMemeCarousel(BuildContext context) {
     return CarouselSlider(
-        items: [1, 2, 3, 4, 5].map((i) {
-          return new Builder(
-            builder: (BuildContext context) {
-              return new Container(
-                  width: MediaQuery.of(context).size.width,
-                  margin: new EdgeInsets.symmetric(horizontal: 5.0),
-                  decoration: new BoxDecoration(color: Colors.amber),
-                  child: new Text(
-                    'text $i',
-                    style: new TextStyle(fontSize: 16.0),
-                  ));
-            },
-          );
+        items: _memes.map((url) {
+          return new Container(
+              margin: new EdgeInsets.all(5.0),
+              child: new ClipRRect(
+                  borderRadius: new BorderRadius.all(new Radius.circular(10.0)),
+                  child: new CachedNetworkImage(
+                    imageUrl: url,
+                    fit: BoxFit.contain,
+                  )));
         }).toList(),
         height: 350.0,
         autoPlay: true);
@@ -99,19 +120,19 @@ class ProfilePage extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(
-                    top: 80.0, bottom: 30.0, right: 15.0, left: 15.0),
+                    top: 80.0, bottom: 30.0, right: 0.0, left: 80.0),
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     _buildAvatar(),
                     _buildInfo(),
-                    // _buildChat(),
                   ],
                 ),
               ),
+              _buildChat(),
               Padding(
                 padding: EdgeInsets.only(
-                    top: 90.0, bottom: 30.0, right: 15.0, left: 15.0),
+                    top: 20.0, bottom: 30.0, right: 0.0, left: 0.0),
                 child: _buildMemeCarousel(context),
               ),
             ],
