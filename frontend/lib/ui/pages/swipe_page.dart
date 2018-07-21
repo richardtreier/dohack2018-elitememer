@@ -100,6 +100,24 @@ class SwipePageState extends State<SwipePage>
                       }
                     });
                   },
+                  onHorizontalDragEnd: (DragEndDetails end) {
+                    setState(() {
+                      movedPercentage =
+                          moved / MediaQuery.of(context).size.width;
+
+                      final double discardPercentage = 0.3;
+
+                      if (movedPercentage > discardPercentage) {
+                        animateSlide(true, true, movedPercentage);
+                      } else if (movedPercentage < -discardPercentage) {
+                        animateSlide(false, true, -movedPercentage);
+                      } else if (movedPercentage < discardPercentage) {
+                        animateSlide(true, false, movedPercentage);
+                      } else if (movedPercentage > -discardPercentage) {
+                        animateSlide(false, false, movedPercentage);
+                      }
+                    });
+                  },
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -109,14 +127,14 @@ class SwipePageState extends State<SwipePage>
                       backgroundColor: Colors.redAccent,
                       foregroundColor: Colors.white,
                       child: Icon(Icons.close),
-                      onPressed: () => animateSlide(false),
+                      onPressed: () => animateSlide(false, true, 0.0),
                     ),
                     FloatingActionButton(
                       heroTag: null,
                       backgroundColor: Colors.greenAccent,
                       foregroundColor: Colors.white,
                       child: Icon(Icons.favorite_border),
-                      onPressed: () => animateSlide(true),
+                      onPressed: () => animateSlide(true, true, 0.0),
                     ),
                   ],
                 )
@@ -135,7 +153,6 @@ class SwipePageState extends State<SwipePage>
       );
     }
 
-
     int i = -1;
 
     return Stack(
@@ -151,11 +168,16 @@ class SwipePageState extends State<SwipePage>
     );
   }
 
-  void animateSlide(bool forward) {
+  void animateSlide(bool forward, bool accepted, double position) {
     controller.reset();
 
-    final Animation<double> animation = Tween<double>(begin: 0.0, end: 1.0)
-        .animate(CurvedAnimation(parent: controller, curve: Curves.easeInOut));
+    Animation<double> animation;
+
+    accepted == true
+        ? animation = Tween<double>(begin: position, end: 1.0).animate(
+            CurvedAnimation(parent: controller, curve: Curves.easeInOut))
+        : animation = Tween<double>(begin: position, end: 0.0).animate(
+            CurvedAnimation(parent: controller, curve: Curves.easeInOut));
 
     animation.addListener(() {
       setState(() {
@@ -168,11 +190,14 @@ class SwipePageState extends State<SwipePage>
       if (status == AnimationStatus.completed && !completed) {
         completed = true;
 
-        memes.removeAt(0);
-        memes = memes;
+        if (accepted) {
+          memes.removeAt(0);
+          memes = memes;
+        }
 
         moved = 0.0;
         movedPercentage = 0.0;
+        position = 0.0;
       }
     });
 
