@@ -1,14 +1,26 @@
 import 'dart:ui';
+import 'package:elitememer/services/api_service/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => ProfilePageState();
+}
+
+class ProfilePageState extends State<ProfilePage> {
   List<String> _memes = [
     'https://i.imgur.com/UE5Meld.jpg',
     'https://i.imgur.com/5LZroHc.jpg',
     'https://i.imgur.com/277C2AY.jpeg',
   ];
+
+
+  @override
+  void initState() {
+    // PROFILE LOADING HERE
+  }
 
   Widget _buildMemeCarousel(BuildContext context) {
     return Center(

@@ -9,18 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 void main() {
-  ApiService service = ApiService();
-
-  service.fetchUserList().then((List<User> users) {
-      print(users);
-
-      final User ourUser = users[0];
-
-      service.fetchUserNextMemes(ourUser, 3).then((List<Meme> memes) {
-        print(memes);
-      });
-});
-
   runApp(MyApp());
 }
 

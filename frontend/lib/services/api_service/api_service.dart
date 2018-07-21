@@ -5,6 +5,9 @@ import 'package:http/http.dart' as http;
 
 import 'model.dart';
 
+ApiService service = ApiService();
+
+
 class ApiService {
   final apiEndpoint = "https://elitememers.cfapps.io/graphql";
 

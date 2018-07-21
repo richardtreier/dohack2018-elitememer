@@ -1,5 +1,8 @@
 import 'dart:ui' as ui;
+import 'package:elitememer/services/api_service/api_service.dart';
+import 'package:elitememer/services/api_service/model.dart';
 import 'package:elitememer/ui/widgets/nav_scaffold.dart';
+import 'package:elitememer/main.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -13,6 +16,7 @@ class SwipePageState extends State<SwipePage>
   DragStartDetails dragStart;
   double moved = 0.0;
   double movedPercentage = 0.0;
+  int memePointer = 0;
   AnimationController controller;
 
   List<String> memes = <String>[
@@ -21,12 +25,27 @@ class SwipePageState extends State<SwipePage>
     'https://i.imgur.com/277C2AY.jpeg',
   ];
 
+  List<Meme> allMemes = [];
+
   @override
   void initState() {
     super.initState();
 
+    service.fetchUserList().then((List<User> users) {
+      service.fetchUserNextMemes(users[0], 40).then((List<Meme> memeList) {
+        allMemes = memeList;
+        refreshMemes();
+      });
+    });
+
     controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 350));
+  }
+
+  void refreshMemes() {
+    setState(() {
+      memes = allMemes.getRange(memePointer, memePointer + 3).map((Meme meme) => meme.image.imgurURL).toList();
+    });
   }
 
   @override
@@ -91,8 +110,9 @@ class SwipePageState extends State<SwipePage>
 
                       if (movedPercentage > discardPercentage ||
                           movedPercentage < -discardPercentage) {
-                        memes.removeAt(0);
-                        memes = memes;
+
+                        memePointer++;
+                        refreshMemes();
 
                         moved = 0.0;
                         movedPercentage = 0.0;
@@ -193,8 +213,8 @@ class SwipePageState extends State<SwipePage>
         completed = true;
 
         if (accepted) {
-          memes.removeAt(0);
-          memes = memes;
+          memePointer++;
+          refreshMemes();
         }
 
         moved = 0.0;

@@ -75,6 +75,6 @@ class IntroPage extends StatelessWidget {
         color: Colors.white,
         fontSize: 18.0,
       ),
-    ); //Material App
+    );
   }
 }
