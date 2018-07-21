@@ -1,0 +1,4 @@
+type Image {
+    uuid: ID!
+    imgurURL: String!
+}

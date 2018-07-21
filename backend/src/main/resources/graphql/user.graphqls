@@ -1,4 +1,6 @@
 type User {
     uuid: ID!
     name: String!
+
+    avatar: Image!
 }

@@ -7,10 +7,10 @@ graphql:
     schemaLocationPattern: "**/*.graphqls"
 
 graphiql:
-  mapping: /graphiql
+  mapping: /
   endpoint: /graphql
   enabled: true
-  pageTitle: EliteMemer Backend - GraphiQL
+  pageTitle: EliteMemer GraphQL Backend
   cdn:
     enabled: false
     version: 0.11.11
