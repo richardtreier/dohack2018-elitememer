@@ -1,8 +1,3 @@
-
-type Schema {
-    query: Query
-}
-
 type Query {
-    helloWorld: String!
+    users: [User!]!
 }
