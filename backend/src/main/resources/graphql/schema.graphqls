@@ -1,3 +1,4 @@
 type Query {
-    users: [User!]!
+    userList: [User!]!
+    user(uuid: ID!): User!
 }
