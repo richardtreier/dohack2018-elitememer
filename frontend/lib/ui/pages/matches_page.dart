@@ -73,10 +73,6 @@ class _UserTile extends StatelessWidget {
               ),
               Text('89%',
                   style: TextStyle(fontSize: 24.0, color: Colors.greenAccent)),
-              Padding(
-                padding: EdgeInsets.only(right: 7.0, left: 7.0),
-                child: Container(),
-              ),
             ],
           ),
         ),

@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
 
     return new MaterialApp(
       title: 'EliteMemer',
-      theme: new ThemeData.dark(),
+      theme: ThemeData.dark(),
       initialRoute: '/',
       routes: <String, WidgetBuilder>{
         '/': (BuildContext context) => IntroPage(),
