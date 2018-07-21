@@ -9,6 +9,9 @@ class User {
   final double enemyPercentage;
 
   final List<Meme> topMemes;
+  final List<Meme> nextMemes;
+
+  final List<User> matches;
 
   User(
       {this.uuid,
@@ -17,7 +20,9 @@ class User {
       this.snobOrBobPercentage,
       this.matchPercentage,
       this.enemyPercentage,
-      this.topMemes});
+      this.topMemes,
+      this.nextMemes,
+      this.matches});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return json == null
@@ -29,10 +34,12 @@ class User {
             snobOrBobPercentage: json["snobOrBobPercentage"],
             matchPercentage: json["matchPercentage"],
             enemyPercentage: json["enemyPercentage"],
-            topMemes: json["topMemes"] == null
-                ? null
-                : (json["topMemes"] as List<Map<String, dynamic>>)
-                    .map((ele) => Meme.fromJson(ele)));
+            topMemes: listFromJson(json["topMemes"],
+                (dynamic ele) => Meme.fromJson(ele as Map<String, dynamic>)),
+            nextMemes: listFromJson(json["nextMemes"],
+                (dynamic ele) => Meme.fromJson(ele as Map<String, dynamic>)),
+            matches: listFromJson(json["matches"],
+                (dynamic ele) => User.fromJson(ele as Map<String, dynamic>)));
   }
 }
 
@@ -57,4 +64,14 @@ class Meme {
         ? null
         : Meme(uuid: json["uuid"], image: Image.fromJson(json["image"]));
   }
+}
+
+List<T> listFromJson<T>(dynamic list, T fromJson(dynamic json)) {
+  if (list == null) {
+    return list;
+  }
+
+  return (list as List<dynamic>)
+      .map((dynamic listElement) => fromJson(listElement))
+      .toList();
 }
