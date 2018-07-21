@@ -59,17 +59,10 @@ class IntroPage extends StatelessWidget {
       textStyle: TextStyle(fontFamily: 'MyFont', color: Colors.white),
     ),
 ];
-  
+
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'IntroViews Flutter', //title of app
-      theme: new ThemeData(
-        primarySwatch: Colors.blue,
-      ), //ThemeData
-      home: new Builder(
-        builder: (context) => new IntroViewsFlutter(
+    return new IntroViewsFlutter(
               pages,
               onTapDoneButton: () {
                 Navigator.push<dynamic>(
@@ -84,8 +77,6 @@ class IntroPage extends StatelessWidget {
                 color: Colors.white,
                 fontSize: 18.0,
               ),
-            ), //IntroViewsFlutter
-      ), //Builder
     ); //Material App
   }
 }
