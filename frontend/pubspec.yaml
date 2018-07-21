@@ -12,6 +12,7 @@ version: 1.0.0+1
 dependencies:
   flutter:
     sdk: flutter
+  intro_views_flutter: "^2.2.2"
   cached_network_image: "^0.4.1"
 
   # The following adds the Cupertino Icons font to your application.
@@ -45,9 +46,6 @@ flutter:
   # For details regarding adding assets from package dependencies, see
   # https://flutter.io/assets-and-images/#from-packages
 
-  assets:
-    - graphics/
-    
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
