@@ -129,11 +129,7 @@ class SwipePageState extends State<SwipePage>
                       child: Icon(Icons.close),
                       onPressed: () => animateSlide(false, true, 0.0),
                     ),
-                    FloatingActionButton(
-                      heroTag: null,
-                      backgroundColor: Colors.orangeAccent,
-                      foregroundColor: Colors.white,
-                      child: Icon(Icons.star),
+                    _StarButton(
                       onPressed: () => animateSlide(true, true, 0.0),
                     ),
                     FloatingActionButton(
@@ -237,5 +233,78 @@ class SwipeCard extends StatelessWidget {
                 ),
               ),
             )));
+  }
+}
+
+class _StarButton extends StatefulWidget {
+  VoidCallback onPressed;
+
+  _StarButton({this.onPressed});
+
+  @override
+  State<StatefulWidget> createState() => _StarButtonState(onPressed: onPressed);
+}
+
+class _StarButtonState extends State<_StarButton>
+    with SingleTickerProviderStateMixin {
+  VoidCallback onPressed;
+
+  _StarButtonState({this.onPressed});
+
+  Animation size;
+  Animation rotation;
+  Animation position;
+  AnimationController controller;
+
+  @override
+  void initState() {
+    controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 450));
+
+    size = Tween<double>(begin: 60.0, end: 0.0).animate(CurvedAnimation(parent: controller, curve: Curves.decelerate));
+    position = Tween<double>(begin: 0.0, end: 80.0).animate(CurvedAnimation(parent: controller, curve: Curves.bounceInOut));
+    rotation = Tween<double>(begin: 0.0, end: 9.0).animate(CurvedAnimation(parent: controller, curve: Curves.bounceInOut));
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+    alignment: Alignment.center,
+      overflow: Overflow.visible,
+      children: <Widget>[
+        Positioned(
+          bottom: position.value,
+          child: Transform.rotate(
+            angle: rotation.value,
+            child: Container(
+              width: size.value,
+              height: size.value,
+              child: size.value > 5.0 ? FloatingActionButton(
+                heroTag: null,
+                backgroundColor: Colors.orangeAccent,
+                foregroundColor: Colors.white,
+                child: Icon(Icons.star, size: size.value / 2.0,),
+                onPressed: animate,
+              ) : null,
+            ),
+          ),
+        ),
+        FloatingActionButton(
+          heroTag: null,
+          backgroundColor: Colors.orangeAccent,
+          foregroundColor: Colors.white,
+          child: Icon(Icons.star),
+          onPressed: animate,
+        )
+      ],
+    );
+  }
+
+  void animate() {
+    controller.reset();
+    controller.forward();
+
+    onPressed();
   }
 }
