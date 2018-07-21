@@ -2,6 +2,7 @@ import 'dart:ui' as ui;
 
 import 'package:elitememer/ui/widgets/nav_scaffold.dart';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class SwipePage extends StatefulWidget {
   @override
@@ -39,7 +40,7 @@ class SwipePageState extends State<SwipePage>
               ? Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(memes[1]),
+                      image: CachedNetworkImageProvider(memes[1]),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -57,7 +58,7 @@ class SwipePageState extends State<SwipePage>
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(memes[0]),
+                  image: CachedNetworkImageProvider(memes[0]),
                   fit: BoxFit.cover,
                 ),
               ),

@@ -45,17 +45,17 @@ class _UserTile extends StatelessWidget {
           leading: CircleAvatar(
             radius: 40.0,
             backgroundImage:
-                NetworkImage('https://randomuser.me/api/portraits/men/3.jpg'),
+                AssetImage('graphics/man_portrait.jpg'),
           ),
           title: Text(
             'Niklas',
             style: TextStyle(fontSize: 26.0),
           ),
           trailing: status != _MemeStatus.Normie
-              ? Image.network(
+              ? Image.asset(
                   status == _MemeStatus.MemeSnob
-                      ? 'https://emojipedia-us.s3.amazonaws.com/thumbs/320/facebook/138/man-in-tuxedo_1f935.png'
-                      : 'https://emojipedia-us.s3.amazonaws.com/thumbs/320/facebook/138/male-farmer_1f468-200d-1f33e.png',
+                      ? 'graphics/meme_snob.png'
+                      : 'graphics/meme_bob.png',
                   height: 55.0,
                   width: 55.0,
                 )
