@@ -1,0 +1,16 @@
+graphql:
+  servlet:
+    mapping: /graphql
+    enabled: true
+    corsEnabled: true
+  tools:
+    schemaLocationPattern: "**/*.graphqls"
+
+graphiql:
+  mapping: /
+  endpoint: /graphql
+  enabled: true
+  pageTitle: EliteMemer GraphQL Backend
+  cdn:
+    enabled: false
+    version: 0.11.11
