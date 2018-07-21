@@ -8,9 +8,24 @@ class SwipePage extends StatefulWidget {
   State<StatefulWidget> createState() => SwipePageState();
 }
 
-class SwipePageState extends State<SwipePage> {
+class SwipePageState extends State<SwipePage>
+    with SingleTickerProviderStateMixin {
   DragStartDetails dragStart;
   double moved = 0.0;
+  double movedPercentage = 0.0;
+  AnimationController controller;
+
+  List<String> memes = [
+    'https://i.imgur.com/UE5Meld.jpg',
+    'https://i.imgur.com/5LZroHc.jpg',
+    'https://i.imgur.com/277C2AY.jpeg',
+  ];
+
+  @override
+  void initState() {
+    controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 350));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,19 +33,38 @@ class SwipePageState extends State<SwipePage> {
       context,
       Stack(
         children: <Widget>[
-          Container(
-            decoration: new BoxDecoration(
-              image: new DecorationImage(
-                image: NetworkImage(
-                    'https://i3.kym-cdn.com/photos/images/newsfeed/000/170/791/welcome-to-the-internet-internet-demotivational-poster-1264714433.png.jpg'),
-                fit: BoxFit.cover,
+          memes.length > 1
+              ? Container(
+                  decoration: new BoxDecoration(
+                    image: new DecorationImage(
+                      image: NetworkImage(memes[1]),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  child: new BackdropFilter(
+                    filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                    child: new Container(
+                      decoration: new BoxDecoration(
+                          color: Colors.black.withOpacity(0.5)),
+                    ),
+                  ),
+                )
+              : Container(),
+          Opacity(
+            opacity: movedPercentage.abs(),
+            child: Container(
+              decoration: new BoxDecoration(
+                image: new DecorationImage(
+                  image: NetworkImage(memes[0]),
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            child: new BackdropFilter(
-              filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-              child: new Container(
-                decoration:
-                    new BoxDecoration(color: Colors.black.withOpacity(0.5)),
+              child: new BackdropFilter(
+                filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                child: new Container(
+                  decoration:
+                      new BoxDecoration(color: Colors.black.withOpacity(0.5)),
+                ),
               ),
             ),
           ),
@@ -42,17 +76,25 @@ class SwipePageState extends State<SwipePage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 GestureDetector(
-                  child:                 Stack(
-                    overflow: Overflow.visible,
-                    fit: StackFit.loose,
-                    children: <Widget>[
-                      SwipeCard(swipePercentage: moved / MediaQuery.of(context).size.width * 1.5,)
-                    ],
-                  ),
-                  onHorizontalDragStart: (DragStartDetails start) => dragStart = start,
+                  child: _buildMemeStack(context),
+                  onHorizontalDragStart: (DragStartDetails start) =>
+                      dragStart = start,
                   onHorizontalDragUpdate: (DragUpdateDetails update) {
                     setState(() {
                       moved += update.delta.dx;
+                      movedPercentage =
+                          moved / MediaQuery.of(context).size.width * 1.5;
+
+                      double discardPercentage = 0.6;
+
+                      if (movedPercentage > discardPercentage ||
+                          movedPercentage < -discardPercentage) {
+                        memes.removeAt(0);
+                        memes = memes;
+
+                        moved = 0.0;
+                        movedPercentage = 0.0;
+                      }
                     });
                   },
                 ),
@@ -60,16 +102,16 @@ class SwipePageState extends State<SwipePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     FloatingActionButton(
-                      backgroundColor: Colors.greenAccent,
-                      foregroundColor: Colors.white,
-                      child: Icon(Icons.close),
-                      onPressed: () => print('Trash'),
-                    ),
-                    FloatingActionButton(
                       backgroundColor: Colors.redAccent,
                       foregroundColor: Colors.white,
+                      child: Icon(Icons.close),
+                      onPressed: () => animateSlide(false),
+                    ),
+                    FloatingActionButton(
+                      backgroundColor: Colors.greenAccent,
+                      foregroundColor: Colors.white,
                       child: Icon(Icons.favorite_border),
-                      onPressed: () => print('Favorite'),
+                      onPressed: () => animateSlide(true),
                     ),
                   ],
                 )
@@ -80,25 +122,76 @@ class SwipePageState extends State<SwipePage> {
       ),
     );
   }
+
+  Stack _buildMemeStack(BuildContext context) {
+    int i = -1;
+
+    return Stack(
+      overflow: Overflow.visible,
+      children: memes
+          .map((String url) => SwipeCard(
+              url: url,
+              order: ++i,
+              swipePercentage: i == 0 ? movedPercentage : 0.0))
+          .toList()
+          .reversed
+          .toList(),
+    );
+  }
+
+  void animateSlide(bool forward) {
+    controller.reset();
+
+    Animation animation = Tween<double>(begin: 0.0, end: 1.3)
+        .animate(CurvedAnimation(parent: controller, curve: Curves.easeInOut));
+
+    animation.addListener(() {
+      setState(() {
+        movedPercentage = forward ? animation.value : -animation.value;
+      });
+    });
+
+    bool completed = false;
+    animation.addStatusListener((AnimationStatus status) {
+      if (status == AnimationStatus.completed && !completed) {
+        completed = true;
+
+        memes.removeAt(0);
+        memes = memes;
+
+        moved = 0.0;
+        movedPercentage = 0.0;
+      }
+    });
+
+    controller.forward();
+  }
 }
 
 class SwipeCard extends StatelessWidget {
+  String url;
   double swipePercentage;
   int order;
 
-  SwipeCard({this.swipePercentage = 0.0, @required this.order});
+  SwipeCard({this.url, this.swipePercentage = 0.0, @required this.order});
 
   @override
   Widget build(BuildContext context) {
-    return SlideTransition(
-      position: AlwaysStoppedAnimation<Offset>(Offset(swipePercentage * 1.2, (swipePercentage * 0.2).abs())),
-      child: Transform.rotate(
-        angle: swipePercentage * 0.7,
-        child: Card(
-          child: Image.network(
-              'https://i3.kym-cdn.com/photos/images/newsfeed/000/170/791/welcome-to-the-internet-internet-demotivational-poster-1264714433.png.jpg'),
-        ),
-      ),
-    );
+    return Padding(
+        padding: EdgeInsets.only(top: 10.0 * order),
+        child: SlideTransition(
+            position: AlwaysStoppedAnimation<Offset>(
+                Offset(swipePercentage * 1.2, (swipePercentage * 0.2).abs())),
+            child: Transform.rotate(
+              angle:
+                  swipePercentage == 0.0 ? order / 30.0 : swipePercentage * 0.7,
+              child: Card(
+                child: Image.network(
+                  url,
+                  height: 300.0,
+                  width: 300.0,
+                ),
+              ),
+            )));
   }
 }
