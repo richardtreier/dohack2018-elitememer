@@ -3,7 +3,15 @@ import 'dart:ui';
 import 'package:elitememer/ui/widgets/nav_scaffold.dart';
 import 'package:flutter/material.dart';
 
-class SwipePage extends StatelessWidget {
+class SwipePage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => SwipePageState();
+}
+
+class SwipePageState extends State<SwipePage> {
+  DragStartDetails dragStart;
+  double moved = 0.0;
+
   @override
   Widget build(BuildContext context) {
     return buildNavScaffold(
@@ -33,9 +41,20 @@ class SwipePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                Card(
-                  child: Image.network(
-                      'https://i3.kym-cdn.com/photos/images/newsfeed/000/170/791/welcome-to-the-internet-internet-demotivational-poster-1264714433.png.jpg'),
+                GestureDetector(
+                  child:                 Stack(
+                    overflow: Overflow.visible,
+                    fit: StackFit.loose,
+                    children: <Widget>[
+                      SwipeCard(swipePercentage: moved / MediaQuery.of(context).size.width * 1.5,)
+                    ],
+                  ),
+                  onHorizontalDragStart: (DragStartDetails start) => dragStart = start,
+                  onHorizontalDragUpdate: (DragUpdateDetails update) {
+                    setState(() {
+                      moved += update.delta.dx;
+                    });
+                  },
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -58,6 +77,27 @@ class SwipePage extends StatelessWidget {
             ),
           )
         ],
+      ),
+    );
+  }
+}
+
+class SwipeCard extends StatelessWidget {
+  double swipePercentage;
+  int order;
+
+  SwipeCard({this.swipePercentage = 0.0, @required this.order});
+
+  @override
+  Widget build(BuildContext context) {
+    return SlideTransition(
+      position: AlwaysStoppedAnimation<Offset>(Offset(swipePercentage * 1.2, (swipePercentage * 0.2).abs())),
+      child: Transform.rotate(
+        angle: swipePercentage * 0.7,
+        child: Card(
+          child: Image.network(
+              'https://i3.kym-cdn.com/photos/images/newsfeed/000/170/791/welcome-to-the-internet-internet-demotivational-poster-1264714433.png.jpg'),
+        ),
       ),
     );
   }
