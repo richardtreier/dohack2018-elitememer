@@ -44,8 +44,7 @@ class _UserTile extends StatelessWidget {
         child: ListTile(
           leading: CircleAvatar(
             radius: 40.0,
-            backgroundImage:
-                AssetImage('graphics/man_portrait.jpg'),
+            backgroundImage: AssetImage('graphics/man_portrait.jpg'),
           ),
           title: Text(
             'Niklas',

@@ -1,12 +1,9 @@
 import 'dart:ui';
-import 'package:elitememer/ui/widgets/nav_scaffold.dart';
-import 'package:elitememer/ui/widgets/progressbar.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class ProfilePage extends StatelessWidget {
-
   List<String> _memes = [
     'https://i.imgur.com/UE5Meld.jpg',
     'https://i.imgur.com/5LZroHc.jpg',
@@ -21,7 +18,8 @@ class ProfilePage extends StatelessWidget {
             items: _memes.map((url) {
               return new Container(
                   child: new ClipRRect(
-                      borderRadius: new BorderRadius.all(new Radius.circular(10.0)),
+                      borderRadius:
+                          new BorderRadius.all(new Radius.circular(10.0)),
                       child: new CachedNetworkImage(
                         imageUrl: url,
                         fit: BoxFit.cover,
@@ -44,7 +42,7 @@ class ProfilePage extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(
+                  image: CachedNetworkImageProvider(
                     'https://3c1703fe8d.site.internapcdn.net/newman/csz/news/800/2017/neutrinofaci.jpg',
                   ),
                 ),
@@ -69,7 +67,7 @@ class ProfilePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     CircleAvatar(
-                      backgroundImage: NetworkImage(
+                      backgroundImage: CachedNetworkImageProvider(
                           'https://p5.focus.de/img/fotos/origs9287567/8808514057-w630-h472-o-q75-p5/urn-newsml-dpa-com-20090101-180720-99-231079-large-4-3.jpg'),
                       radius: 45.0,
                     ),
