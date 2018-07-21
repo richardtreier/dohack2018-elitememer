@@ -5,7 +5,7 @@ Drawer buildNavDrawer(BuildContext context) {
     child: Column(
       children: <Widget>[
         DrawerHeader(
-          child: Image.network('https://i3.kym-cdn.com/photos/images/newsfeed/000/170/791/welcome-to-the-internet-internet-demotivational-poster-1264714433.png.jpg'
+          child: Image.asset('graphics/welcome-to-the-internet.jpg'
           , fit: BoxFit.cover,),
         ),
         ListTile(
