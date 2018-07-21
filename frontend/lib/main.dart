@@ -1,3 +1,5 @@
+import 'package:elitememer/services/api_service/api_service.dart';
+import 'package:elitememer/services/api_service/model.dart';
 import 'package:elitememer/ui/pages/chat_page.dart';
 import 'package:elitememer/ui/pages/intro_page.dart';
 import 'package:elitememer/ui/pages/matches_page.dart';
@@ -6,7 +8,21 @@ import 'package:elitememer/ui/pages/swipe_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-void main() => runApp(new MyApp());
+void main() {
+  ApiService service = ApiService();
+
+  service.fetchUserList().then((List<User> users) {
+      print(users);
+
+      final User ourUser = users[0];
+
+      service.fetchUserNextMemes(ourUser, 3).then((List<Meme> memes) {
+        print(memes);
+      });
+});
+
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
