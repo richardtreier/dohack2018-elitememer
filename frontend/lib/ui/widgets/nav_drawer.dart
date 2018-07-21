@@ -11,10 +11,12 @@ Drawer buildNavDrawer(BuildContext context) {
         ListTile(
           leading: Icon(Icons.thumb_up),
           title: Text('Memes'),
+          onTap: () => Navigator.pushNamed(context, '/swipePage'),
         ),
         ListTile(
           leading: Icon(Icons.chat),
           title: Text('Matches'),
+          onTap: () => Navigator.pushNamed(context, '/matchesPage'),
         )
       ],
     ),

@@ -53,7 +53,7 @@ class SwipePageState extends State<SwipePage>
                 )
               : Container(),
           Opacity(
-            opacity: movedPercentage.abs(),
+            opacity: 1 - movedPercentage.abs(),
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -85,7 +85,7 @@ class SwipePageState extends State<SwipePage>
                     setState(() {
                       moved += update.delta.dx;
                       movedPercentage =
-                          moved / MediaQuery.of(context).size.width * 1.5;
+                          moved / MediaQuery.of(context).size.width;
 
                       final double discardPercentage = 0.6;
 
@@ -104,12 +104,14 @@ class SwipePageState extends State<SwipePage>
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     FloatingActionButton(
+                      heroTag: null,
                       backgroundColor: Colors.redAccent,
                       foregroundColor: Colors.white,
                       child: Icon(Icons.close),
                       onPressed: () => animateSlide(false),
                     ),
                     FloatingActionButton(
+                      heroTag: null,
                       backgroundColor: Colors.greenAccent,
                       foregroundColor: Colors.white,
                       child: Icon(Icons.favorite_border),
@@ -126,6 +128,13 @@ class SwipePageState extends State<SwipePage>
   }
 
   Stack _buildMemeStack(BuildContext context) {
+    if (memes.isEmpty) {
+      return Stack(
+        children: <Widget>[],
+      );
+    }
+
+
     int i = -1;
 
     return Stack(
@@ -134,7 +143,7 @@ class SwipePageState extends State<SwipePage>
           .map((String url) => SwipeCard(
               url: url,
               order: ++i,
-              swipePercentage: i == 0 ? movedPercentage : 0.0))
+              swipePercentage: i == 0 ? movedPercentage * 1.3 : 0.0))
           .toList()
           .reversed
           .toList(),
@@ -144,7 +153,7 @@ class SwipePageState extends State<SwipePage>
   void animateSlide(bool forward) {
     controller.reset();
 
-    final Animation<double> animation = Tween<double>(begin: 0.0, end: 1.3)
+    final Animation<double> animation = Tween<double>(begin: 0.0, end: 1.0)
         .animate(CurvedAnimation(parent: controller, curve: Curves.easeInOut));
 
     animation.addListener(() {
