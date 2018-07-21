@@ -1,0 +1,4 @@
+type Meme {
+    uuid: ID!
+    image: Image!
+}

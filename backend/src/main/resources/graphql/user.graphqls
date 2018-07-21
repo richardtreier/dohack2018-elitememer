@@ -1,6 +1,27 @@
 type User {
     uuid: ID!
+
+    # Display name
     name: String!
 
+    # Avatar Image
     avatar: Image!
+
+    # Snob-Or-Bob Percentage to be shown on the profile of this user for the viewer
+    snobOrBobPercentage(viewerUserUuid: ID!): Float!
+
+    # Match Percentage to be shown on the profile of this user for the viewer
+    matchPercentage(viewerUserUuid: ID!): Float!
+
+    # Enemy Percentage to be shown on the profile of this user for the viewer
+    enemyPercentage(viewerUserUuid: ID!): Float!
+
+    # Memes to be shown on the profile of this user for the viewer
+    topMemes(viewerUserUuid: ID!): [Meme!]!
+
+    # Memes to be suggested to this user for swiping
+    nextMemes(num: Int! = 3): [Meme!]!
+
+    # matches for this user
+    matches: [User!]!
 }
