@@ -16,30 +16,43 @@ class ProfilePageState extends State<ProfilePage> {
     'https://i.imgur.com/277C2AY.jpeg',
   ];
 
-
   @override
   void initState() {
     // PROFILE LOADING HERE
   }
 
   Widget _buildMemeCarousel(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: CarouselSlider(
-            items: _memes.map((url) {
-              return new Container(
-                  child: new ClipRRect(
-                      borderRadius:
-                          new BorderRadius.all(new Radius.circular(10.0)),
-                      child: new CachedNetworkImage(
-                        imageUrl: url,
-                        fit: BoxFit.cover,
-                      )));
-            }).toList(),
-            height: 350.0,
-            autoPlay: true),
-      ),
+    return Stack(
+      children: <Widget>[
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.all(0.0),
+            child: CarouselSlider(
+                items: _memes.map((url) {
+                  return new Container(
+                      child: new ClipRRect(
+                          borderRadius:
+                              new BorderRadius.all(new Radius.circular(10.0)),
+                          child: new CachedNetworkImage(
+                            imageUrl: url,
+                            fit: BoxFit.cover,
+                          )));
+                }).toList(),
+                height: 350.0,
+                autoPlay: true),
+          ),
+        ),
+        new Positioned(
+          child: new FloatingActionButton(
+            child: new Icon(Icons.chat_bubble_outline, color: Colors.black,),
+            onPressed: () {
+            },
+            backgroundColor: Colors.white,
+          ),
+          right: 10.0,
+          top: MediaQuery.of(context).size.height / 1.8 - 5.0,
+        )
+      ],
     );
   }
 
@@ -73,7 +86,7 @@ class ProfilePageState extends State<ProfilePage> {
                     onPressed: () => Navigator.pop(context))),
             SafeArea(
               child: Padding(
-                padding: const EdgeInsets.only(left: 40.0, right: 40.0),
+                padding: const EdgeInsets.only(left: 110.0, right: 110.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -114,7 +127,7 @@ class ProfilePageState extends State<ProfilePage> {
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
