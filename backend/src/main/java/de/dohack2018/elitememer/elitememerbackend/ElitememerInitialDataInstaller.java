@@ -48,10 +48,10 @@ public class ElitememerInitialDataInstaller implements
         // dummy users
         final String[][] dummyUsersData = {
                 {"NigNag", "https://i.imgur.com/q5wHWMv.jpg"},
-                {"dat boiii 2027", "https://i.imgur.com/jm7EdAX.png"},
-                {"Michael Garrix", "https://i.imgur.com/Vknf19a.jpg"},
-                {"xXx_Sn1p3R_xXx", "https://i.imgur.com/40vVnYK.png"},
-                {"shrek is life", "https://i.imgur.com/Vw1wWs7.jpg"},
+                {"dat boiii", "https://i.imgur.com/jm7EdAX.png"},
+                {"peep", "https://i.imgur.com/Vknf19a.jpg"},
+                {"snipur", "https://i.imgur.com/40vVnYK.png"},
+                {"shrek", "https://i.imgur.com/Vw1wWs7.jpg"},
         };
 
         // Create Dummy Users
