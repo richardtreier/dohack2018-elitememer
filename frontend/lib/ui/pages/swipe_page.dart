@@ -43,6 +43,10 @@ class SwipePageState extends State<SwipePage>
   }
 
   void refreshMemes() {
+    if (memePointer > 36) {
+      memePointer = 0;
+    }
+
     setState(() {
       memes = allMemes.getRange(memePointer, memePointer + 3).map((Meme meme) => meme.image.imgurURL).toList();
     });
