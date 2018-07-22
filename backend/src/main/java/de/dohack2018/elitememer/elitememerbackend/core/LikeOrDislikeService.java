@@ -18,7 +18,7 @@ public class LikeOrDislikeService {
 
     @Transactional
     public void likeOrDislikeMeme(boolean like, @NonNull Meme meme, @NonNull User user) {
-        Swipe swipe = new Swipe();
+        Swipe swipe = swipeRepository.findOneByMemeAndUser(meme, user).orElse(new Swipe());
 
         swipe.setLike(like);
         swipe.setMeme(meme);
