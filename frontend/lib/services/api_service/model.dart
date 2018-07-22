@@ -2,10 +2,10 @@ class User {
   final String uuid;
   final String name;
 
-  final Image image;
+  final RichardsImage image;
 
   final double snobOrBobPercentage;
-  final double matchPercentage;
+  double matchPercentage;
   final double enemyPercentage;
 
   final List<Meme> topMemes;
@@ -30,7 +30,7 @@ class User {
         : User(
             uuid: json["uuid"],
             name: json["name"],
-            image: Image.fromJson(json["image"]),
+            image: RichardsImage.fromJson(json["avatar"]),
             snobOrBobPercentage: json["snobOrBobPercentage"],
             matchPercentage: json["matchPercentage"],
             enemyPercentage: json["enemyPercentage"],
@@ -43,26 +43,26 @@ class User {
   }
 }
 
-class Image {
+class RichardsImage {
   final String imgurURL;
 
-  Image({this.imgurURL});
+  RichardsImage({this.imgurURL});
 
-  factory Image.fromJson(Map<String, dynamic> json) {
-    return json == null ? null : Image(imgurURL: json["imgurURL"]);
+  factory RichardsImage.fromJson(Map<String, dynamic> json) {
+    return json == null ? null : RichardsImage(imgurURL: json["imgurURL"]);
   }
 }
 
 class Meme {
   final String uuid;
-  final Image image;
+  final RichardsImage image;
 
   Meme({this.uuid, this.image});
 
   factory Meme.fromJson(Map<String, dynamic> json) {
     return json == null
         ? null
-        : Meme(uuid: json["uuid"], image: Image.fromJson(json["image"]));
+        : Meme(uuid: json["uuid"], image: RichardsImage.fromJson(json["image"]));
   }
 }
 

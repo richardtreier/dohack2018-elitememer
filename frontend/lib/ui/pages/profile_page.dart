@@ -1,5 +1,7 @@
 import 'dart:ui' as ui;
+import 'package:elitememer/main.dart';
 import 'package:elitememer/services/api_service/api_service.dart';
+import 'package:elitememer/ui/pages/matches_page.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -17,9 +19,7 @@ class ProfilePageState extends State<ProfilePage> {
   ];
 
   @override
-  void initState() {
-    // PROFILE LOADING HERE
-  }
+  void initState() {}
 
   Widget _buildMemeCarousel(BuildContext context) {
     return Stack(
@@ -42,18 +42,6 @@ class ProfilePageState extends State<ProfilePage> {
                 autoPlay: true),
           ),
         ),
-        new Positioned(
-          child: new FloatingActionButton(
-            child: new Icon(
-              Icons.chat_bubble_outline,
-              color: Colors.black,
-            ),
-            onPressed: () {},
-            backgroundColor: Colors.white,
-          ),
-          right: 10.0,
-          top: MediaQuery.of(context).size.height / 1.8 - 5.0,
-        )
       ],
     );
   }
@@ -61,6 +49,14 @@ class ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: new Icon(
+          Icons.chat_bubble_outline,
+          color: Colors.black,
+        ),
+        onPressed: () {},
+        backgroundColor: Colors.white,
+      ),
       appBar: PreferredSize(
         preferredSize: Size(MediaQuery.of(context).size.width,
             MediaQuery.of(context).size.height / 3.0),
@@ -88,26 +84,50 @@ class ProfilePageState extends State<ProfilePage> {
                     onPressed: () => Navigator.pop(context))),
             SafeArea(
               child: Padding(
-                padding: const EdgeInsets.only(left: 110.0, right: 110.0),
+                padding: const EdgeInsets.only(left: 40.0, right: 0.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    CircleAvatar(
-                      backgroundImage: CachedNetworkImageProvider(
-                          'https://p5.focus.de/img/fotos/origs9287567/8808514057-w630-h472-o-q75-p5/urn-newsml-dpa-com-20090101-180720-99-231079-large-4-3.jpg'),
-                      radius: 45.0,
+                    Stack(
+                      children: <Widget>[
+                        CircleAvatar(
+                          backgroundImage: CachedNetworkImageProvider(
+                              navigationTarget.image.imgurURL),
+                          radius: 45.0,
+                        ),
+                      ],
+                      alignment: Alignment.centerRight,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 20.0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Text(
-                            'Angela',
-                            style: TextStyle(fontSize: 28.0),
+                          Row(
+                            children: <Widget>[
+                              Image.asset(
+                                  (83 -
+                                                  ((navigationTarget.uuid
+                                                                      .length %
+                                                                  2 +
+                                                              1) *
+                                                          7) *
+                                                      currentI) %
+                                              5 ==
+                                          0
+                                      ? 'graphics/meme_snob.png'
+                                      : 'graphics/meme_bob.png',
+                                  height: 40.0,
+                                  width: 40.0),
+                              Text(
+                                navigationTarget.name,
+                                style: TextStyle(fontSize: 28.0),
+                              )
+                            ],
                           ),
                           Row(
+                            mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
                               Padding(
                                 child: Icon(
@@ -117,12 +137,13 @@ class ProfilePageState extends State<ProfilePage> {
                                 ),
                                 padding: EdgeInsets.only(right: 8.0),
                               ),
-                              Text('89%',
+                              Text(
+                                  '${navigationTarget.matchPercentage.toInt()}%',
                                   style: TextStyle(
                                       fontSize: 24.0,
                                       color: Colors.greenAccent)),
                             ],
-                          )
+                          ),
                         ],
                       ),
                     )

@@ -51,7 +51,7 @@ class ApiService {
   Future<List<User>> fetchUserMatches(User user, int numMemes) async {
     return _fetchGraphQL(
         """
-        query user(\$userUuid: ID!, \$viewingUserUuid: ID!) {
+        query user(\$userUuid: ID!) {
           user(uuid: \$userUuid) {
             matches {
               uuid
