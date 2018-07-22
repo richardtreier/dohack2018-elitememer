@@ -10,19 +10,37 @@ class MatchesPage extends StatelessWidget {
           children: <Widget>[
             _UserTile(
               status: _MemeStatus.MemeBob,
+              imagePath: 'graphics/man_portrait.jpg',
+              profileName: 'Niklas',
+              percentage: '94%',
             ),
             Divider(
               height: 0.0,
             ),
-            _UserTile(),
+            _UserTile(
+              status: _MemeStatus.MemeSnob,
+              imagePath: 'graphics/placeholder.png',
+              profileName: 'Peter',
+              percentage: '89%',
+            ),
             Divider(
               height: 0.0,
             ),
-            _UserTile(),
+            _UserTile(
+              status: _MemeStatus.MemeBob,
+              imagePath: 'graphics/placeholder.png',
+              profileName: 'MEEEEEEEEME!!1',
+              percentage: '82%',
+            ),
             Divider(
               height: 0.0,
             ),
-            _UserTile(status: _MemeStatus.MemeSnob),
+            _UserTile(
+              status: _MemeStatus.MemeSnob,
+              imagePath: 'graphics/placeholder.png',
+              profileName: 'Pascal',
+              percentage: '79%',
+            ),
           ],
         ));
   }
@@ -32,8 +50,15 @@ enum _MemeStatus { MemeSnob, MemeBob, Normie }
 
 class _UserTile extends StatelessWidget {
   final _MemeStatus status;
+  final String profileName;
+  final String imagePath;
+  final String percentage;
 
-  _UserTile({this.status = _MemeStatus.Normie});
+  _UserTile(
+      {this.status = _MemeStatus.Normie,
+      this.profileName,
+      this.imagePath,
+      this.percentage});
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +69,10 @@ class _UserTile extends StatelessWidget {
         child: ListTile(
           leading: CircleAvatar(
             radius: 40.0,
-            backgroundImage: AssetImage('graphics/man_portrait.jpg'),
+            backgroundImage: AssetImage(imagePath),
           ),
           title: Text(
-            'Niklas',
+            profileName,
             style: TextStyle(fontSize: 26.0),
           ),
           trailing: status != _MemeStatus.Normie
@@ -70,7 +95,7 @@ class _UserTile extends StatelessWidget {
                 color: Colors.greenAccent,
                 size: 28.0,
               ),
-              Text('89%',
+              Text(' ' + percentage,
                   style: TextStyle(fontSize: 24.0, color: Colors.greenAccent)),
             ],
           ),
