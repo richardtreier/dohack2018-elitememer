@@ -11,14 +11,14 @@ class IntroPage extends StatelessWidget {
         iconColor: null,
         bubbleBackgroundColor: null,
         body: Text(
-          'Haselfree  booking  of  flight  tickets  with  full  refund  on  cancelation',
+          'Meet new people with humor by matching memes',
         ),
         title: Text(
-          'Flights',
+          'Memes',
         ),
         textStyle: TextStyle(fontFamily: 'MyFont', color: Colors.white),
-        mainImage: Image.network(
-          'https://i.imgur.com/abmaGJ5.jpg',
+        mainImage: Image.asset(
+          'graphics/intro_1.jpg',
           height: 285.0,
           width: 285.0,
           alignment: Alignment.center,
@@ -29,11 +29,11 @@ class IntroPage extends StatelessWidget {
       iconColor: null,
       bubbleBackgroundColor: null,
       body: Text(
-        'We  work  for  the  comfort ,  enjoy  your  stay  at  our  beautiful  hotels',
+        'View your matches and see if they are a Meme-Snob or -Bob',
       ),
-      title: Text('Hotels'),
-      mainImage: Image.network(
-        'https://i.imgur.com/abmaGJ5.jpg',
+      title: Text('Matches'),
+      mainImage: Image.asset(
+        'graphics/intro_2.jpg',
         height: 285.0,
         width: 285.0,
         alignment: Alignment.center,
@@ -46,11 +46,11 @@ class IntroPage extends StatelessWidget {
       iconColor: null,
       bubbleBackgroundColor: null,
       body: Text(
-        'Easy  cab  booking  at  your  doorstep  with  cashless  payment  system',
+        'See the favorites of your matches and contact them',
       ),
-      title: Text('Cabs'),
-      mainImage: Image.network(
-        'https://i.imgur.com/abmaGJ5.jpg',
+      title: Text('Social'),
+      mainImage: Image.asset(
+        'graphics/intro_3.jpg',
         height: 285.0,
         width: 285.0,
         alignment: Alignment.center,
