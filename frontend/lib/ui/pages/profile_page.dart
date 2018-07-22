@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'dart:ui' as ui;
 import 'package:elitememer/services/api_service/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -44,9 +44,11 @@ class ProfilePageState extends State<ProfilePage> {
         ),
         new Positioned(
           child: new FloatingActionButton(
-            child: new Icon(Icons.chat_bubble_outline, color: Colors.black,),
-            onPressed: () {
-            },
+            child: new Icon(
+              Icons.chat_bubble_outline,
+              color: Colors.black,
+            ),
+            onPressed: () {},
             backgroundColor: Colors.white,
           ),
           right: 10.0,
@@ -73,7 +75,7 @@ class ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                filter: ui.ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                 child: Container(
                   decoration:
                       BoxDecoration(color: Colors.black.withOpacity(0.5)),

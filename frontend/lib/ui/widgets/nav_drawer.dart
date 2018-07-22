@@ -7,10 +7,10 @@ Drawer buildNavDrawer(BuildContext context) {
       children: <Widget>[
         DrawerHeader(
           child: CircleAvatar(
-                      backgroundImage: CachedNetworkImageProvider(
-                          'https://p5.focus.de/img/fotos/origs9287567/8808514057-w630-h472-o-q75-p5/urn-newsml-dpa-com-20090101-180720-99-231079-large-4-3.jpg'),
-                      radius: 68.0,
-                    ),
+            backgroundImage: CachedNetworkImageProvider(
+                'https://p5.focus.de/img/fotos/origs9287567/8808514057-w630-h472-o-q75-p5/urn-newsml-dpa-com-20090101-180720-99-231079-large-4-3.jpg'),
+            radius: 68.0,
+          ),
         ),
         ListTile(
           leading: Icon(Icons.swap_horiz),

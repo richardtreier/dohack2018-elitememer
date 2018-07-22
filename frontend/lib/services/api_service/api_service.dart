@@ -7,7 +7,6 @@ import 'model.dart';
 
 ApiService service = ApiService();
 
-
 class ApiService {
   final apiEndpoint = "https://elitememers.cfapps.io/graphql";
 
@@ -49,8 +48,7 @@ class ApiService {
         (Map<String, dynamic> json) => User.fromJson(json["user"]).nextMemes);
   }
 
-  Future<List<User>> fetchUserMatches(
-      User user, int numMemes) async {
+  Future<List<User>> fetchUserMatches(User user, int numMemes) async {
     return _fetchGraphQL(
         """
         query user(\$userUuid: ID!, \$viewingUserUuid: ID!) {
@@ -69,9 +67,7 @@ class ApiService {
         }
       """,
         false,
-        <String, dynamic>{
-          "userUuid": user.uuid
-        },
+        <String, dynamic>{"userUuid": user.uuid},
         (Map<String, dynamic> json) => User.fromJson(json["user"]).matches);
   }
 
@@ -138,7 +134,7 @@ class ApiService {
     }
 
     final httpResponse =
-    await http.post(apiEndpoint, body: json.encode(payload));
+        await http.post(apiEndpoint, body: json.encode(payload));
 
     print(httpResponse);
     if (httpResponse.statusCode != 200) {
