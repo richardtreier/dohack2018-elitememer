@@ -20,8 +20,6 @@ class SwipePageState extends State<SwipePage>
   AnimationController controller;
 
   List<String> memes = <String>[
-    'https://i.imgur.com/UE5Meld.jpg',
-    'https://i.imgur.com/5LZroHc.jpg',
     'https://i.imgur.com/277C2AY.jpeg',
   ];
 
@@ -48,7 +46,10 @@ class SwipePageState extends State<SwipePage>
     }
 
     setState(() {
-      memes = allMemes.getRange(memePointer, memePointer + 3).map((Meme meme) => meme.image.imgurURL).toList();
+      memes = allMemes
+          .getRange(memePointer, memePointer + 3)
+          .map((Meme meme) => meme.image.imgurURL)
+          .toList();
     });
   }
 
@@ -114,7 +115,6 @@ class SwipePageState extends State<SwipePage>
 
                       if (movedPercentage > discardPercentage ||
                           movedPercentage < -discardPercentage) {
-
                         memePointer++;
                         refreshMemes();
 
@@ -284,16 +284,18 @@ class _StarButtonState extends State<_StarButton>
     controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 450));
 
-    size = Tween<double>(begin: 60.0, end: 0.0).animate(CurvedAnimation(parent: controller, curve: Curves.decelerate));
-    position = Tween<double>(begin: 0.0, end: 80.0).animate(CurvedAnimation(parent: controller, curve: Curves.bounceInOut));
-    rotation = Tween<double>(begin: 0.0, end: 9.0).animate(CurvedAnimation(parent: controller, curve: Curves.bounceInOut));
-
+    size = Tween<double>(begin: 60.0, end: 0.0)
+        .animate(CurvedAnimation(parent: controller, curve: Curves.decelerate));
+    position = Tween<double>(begin: 0.0, end: 80.0).animate(
+        CurvedAnimation(parent: controller, curve: Curves.bounceInOut));
+    rotation = Tween<double>(begin: 0.0, end: 9.0).animate(
+        CurvedAnimation(parent: controller, curve: Curves.bounceInOut));
   }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
-    alignment: Alignment.center,
+      alignment: Alignment.center,
       overflow: Overflow.visible,
       children: <Widget>[
         Positioned(
@@ -303,13 +305,18 @@ class _StarButtonState extends State<_StarButton>
             child: Container(
               width: size.value,
               height: size.value,
-              child: size.value > 5.0 ? FloatingActionButton(
-                heroTag: null,
-                backgroundColor: Colors.orangeAccent,
-                foregroundColor: Colors.white,
-                child: Icon(Icons.star, size: size.value / 2.0,),
-                onPressed: animate,
-              ) : null,
+              child: size.value > 5.0
+                  ? FloatingActionButton(
+                      heroTag: null,
+                      backgroundColor: Colors.orangeAccent,
+                      foregroundColor: Colors.white,
+                      child: Icon(
+                        Icons.star,
+                        size: size.value / 2.0,
+                      ),
+                      onPressed: animate,
+                    )
+                  : null,
             ),
           ),
         ),
